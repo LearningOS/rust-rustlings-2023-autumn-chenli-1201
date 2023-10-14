@@ -22,30 +22,29 @@
 // Execute `rustlings hint tests5` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
 /// # Safety
 ///
-/// The `address` must contain a mutable reference to a valid `u32` value.
-unsafe fn modify_by_address(address: usize) {
-    // TODO: Fill your safety notice of the code block below to match your
-    // code's behavior and the contract of this function. You may use the
-    // comment of the test below as your format reference.
-    unsafe {
-        todo!("Your code goes here")
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_success() {
-        let mut t: u32 = 0x12345678;
-        // SAFETY: The address is guaranteed to be valid and contains
-        // a unique reference to a `u32` local variable.
-        unsafe { modify_by_address(&mut t as *mut u32 as usize) };
-        assert!(t == 0xAABBCCDD);
-    }
+/// The `address` must contain a mutable reference to a valid `u32` value.  
+unsafe fn modify_by_address(address: usize) {  
+    // SAFETY: The caller must ensure that the address is valid and points to a mutable u32 value.  
+    // Transmuting the usize to a raw mutable pointer is safe if the address is valid.  
+    // Writing to the memory location pointed to by the raw mutable pointer is unsafe.  
+    unsafe {  
+        *(address as *mut u32) = 0xAABBCCDD;  
+    }  
+}  
+  
+#[cfg(test)]  
+mod tests {  
+    use super::*;  
+  
+    #[test]  
+    fn test_success() {  
+        let mut t: u32 = 0x12345678;  
+        // SAFETY: The address is guaranteed to be valid and contains  
+        // a unique reference to a `u32` local variable.  
+        unsafe { modify_by_address(&mut t as *mut u32 as usize) };  
+        assert!(t == 0xAABBCCDD);  
+    }  
 }

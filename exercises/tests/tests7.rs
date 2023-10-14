@@ -36,7 +36,16 @@
 
 // I AM NOT DONE
 
-fn main() {}
+fn main() {
+        // 在测试7中，我们应该设置一个名为`TEST_FOO`的环境变量。  
+    // 将变量值设置为当前的时间戳。  
+    let timestamp = std::time::SystemTime::now()  
+        .duration_since(std::time::UNIX_EPOCH)  
+        .unwrap()  
+        .as_secs();  
+    let your_command = format!("TEST_FOO={}", timestamp);  
+    println!("cargo:{}", your_command);  
+}
 
 #[cfg(test)]
 mod tests {
