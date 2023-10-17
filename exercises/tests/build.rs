@@ -11,9 +11,12 @@ fn main() {
         .as_secs();  
     let your_command1 = format!("TEST_FOO={}", timestamp);  
     println!("cargo:rustc-env={}", your_command1);  
-  
-        // In tests8, we should enable "pass" feature to make the    
+     // In tests8, we should enable "pass" feature to make the    
         // testcase return early. Fill in the command to tell    
         // Cargo about that.    
-       
-        println!("cargo:rustc-cfg'feature=pass'");   }
+        #[cfg(feature = "pass")]{
+        println!("cargo:rustc-cfg=pass"); } 
+        #[cfg(not(feature = "pass"))]  
+        {  
+             panic!("no cfg set"); // 你也可以选择在这里 panic!()，使构建失败  
+        }   }
